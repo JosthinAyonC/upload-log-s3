@@ -1,0 +1,42 @@
+name: "S3 Logger Action"
+description: "Sube un log a S3 con timestamp cada vez que se haga push a main"
+author: "Tu Nombre"
+branding:
+  icon: "upload-cloud"
+  color: "blue"
+
+inputs:
+  log-text:
+    description: "Texto del log a subir"
+    required: true
+  aws-access-key-id:
+    description: "AWS Access Key ID"
+    required: true
+  aws-secret-access-key:
+    description: "AWS Secret Access Key"
+    required: true
+  bucket-name:
+    description: "Nombre del bucket S3"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configurar AWS CLI
+      shell: bash
+      run: |
+        aws configure set aws_access_key_id ${{ inputs.aws-access-key-id }}
+        aws configure set aws_secret_access_key ${{ inputs.aws-secret-access-key }}
+    
+    - name: Generar archivo de log
+      shell: bash
+      run: |
+        TIMESTAMP=$(date +%s)
+        LOG_FILE="log-$TIMESTAMP.txt"
+        echo "${{ inputs.log-text }}" > $LOG_FILE
+        echo "Archivo de log generado: $LOG_FILE"
+    
+    - name: Subir archivo a S3
+      shell: bash
+      run: |
+        aws s3 cp log-$(date +%s).txt s3://${{ inputs.bucket-name }}/
