@@ -1,6 +1,6 @@
 name: "S3 Logger Action"
 description: "Sube un log a S3 con timestamp cada vez que se haga push a main"
-author: "Tu Nombre"
+author: "Josthin Ayón"
 branding:
   icon: "upload-cloud"
   color: "blue"
