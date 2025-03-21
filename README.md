@@ -24,36 +24,12 @@ jobs:
                 uses: actions/checkout@v2
 
             - name: Upload log to S3
-                uses: ./path/to/your/action
+                uses: JosthinAyonC/upload-log-s3@v1.0
                 with:
                     log_text: "Este es el contenido del log."
                     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
                     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                     bucket_name: "nombre-del-bucket"
-```
-
-## Ejemplo de Archivo de Configuración
-
-```yaml
-name: CI
-
-on: [push]
-
-jobs:
-    build:
-        runs-on: ubuntu-latest
-
-        steps:
-        - name: Checkout code
-            uses: actions/checkout@v2
-
-        - name: Upload log to S3
-            uses: ./upload-log-s3
-            with:
-                log_text: "Build completed successfully."
-                aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                bucket_name: "my-s3-bucket"
 ```
 
 ## Licencia
